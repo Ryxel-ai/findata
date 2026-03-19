@@ -1,6 +1,6 @@
 # @ryxel-ai/findata
 
-TypeScript SDK for the **Ryxel Data B2B API**, auto-generated from the OpenAPI specification.
+TypeScript SDK for the **Ryxel Data API**, auto-generated from the OpenAPI specification.
 
 ## Installation
 
@@ -14,7 +14,7 @@ npm install @tanstack/react-query
 
 ## Setup
 
-Configure the API client with your API key:
+Configure the API client with your API key (don't have one? [create an account at data.ryxel.ai](https://data.ryxel.ai)):
 
 ```typescript
 import { client } from "@ryxel-ai/findata/client";
@@ -27,7 +27,7 @@ client.setConfig({
 });
 ```
 
-## Usage with React Query (Optional)
+## Usage with React Query
 
 This requires `@tanstack/react-query` to be installed.
 
