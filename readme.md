@@ -1,8 +1,23 @@
-# @ryxel-ai/findata
+# 🚀 @ryxel-ai/findata
 
-TypeScript SDK for the **Ryxel Data API**, auto-generated from the OpenAPI specification.
+The official TypeScript SDK for the **Ryxel Data API** 📊.
 
-## Installation
+## 🌟 Introduction
+
+**Ryxel Data** provides institutional-grade financial datasets through a simple, RESTful API. This SDK is auto-generated from the OpenAPI specification and designed to give you programmatic access to high-quality financial data, including:
+
+- 📑 **Insider Transactions**: Direct access to SEC Form 4 and Form 3 filings.
+- 📦 **ETF Holdings**: Comprehensive visibility into exchange-traded fund portfolios.
+- 💰 **Earnings & IPOs**: Up-to-date calendars and historical data.
+- 🏛️ **Institutional Data**: Standardized datasets for large-scale analysis.
+
+All data is sourced directly from official filings and standardized for easy consumption, allowing you to focus on building your application instead of cleaning data.
+
+## 📚 Documentation
+
+For detailed guides, endpoint references, and API documentation, please visit: **[https://data.ryxel.ai/docs](https://data.ryxel.ai/docs)**
+
+## 📦 Installation
 
 ```bash
 # Core SDK
@@ -12,7 +27,7 @@ npm install @ryxel-ai/findata @hey-api/client-fetch
 npm install @tanstack/react-query
 ```
 
-## Setup
+## ⚙️ Setup
 
 Configure the API client with your API key (don't have one? [create an account at data.ryxel.ai](https://data.ryxel.ai)):
 
@@ -27,7 +42,7 @@ client.setConfig({
 });
 ```
 
-## Usage with React Query
+## ⚛️ Usage with React Query
 
 This requires `@tanstack/react-query` to be installed.
 
@@ -56,7 +71,7 @@ function InsiderTransactions() {
 }
 ```
 
-## Direct SDK Usage
+## 🛠️ Direct SDK Usage
 
 ```typescript
 import { getInsiderTransactions } from "@ryxel-ai/findata/sdk";
