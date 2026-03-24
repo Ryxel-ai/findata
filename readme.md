@@ -35,7 +35,7 @@ Configure the API client with your API key (don't have one? [create an account a
 import { client } from "@ryxel-ai/findata/client";
 
 client.setConfig({
-  baseUrl: "https://api.ryxeldata.com",
+  baseUrl: "https://data.ryxel.ai/api",
   headers: {
     "x-api-key": "YOUR_API_KEY",
   },
@@ -54,7 +54,7 @@ function InsiderTransactions() {
   const { data, isLoading } = useQuery(
     getInsiderTransactionsOptions({
       query: { ticker: "AAPL", limit: 100 },
-    })
+    }),
   );
 
   if (isLoading) return <div>Loading...</div>;
