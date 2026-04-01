@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetInsiderTransactionsData, GetInsiderTransactionsErrors, GetInsiderTransactionsResponses, GetInstitutionsHoldingsData, GetInstitutionsHoldingsErrors, GetInstitutionsHoldingsResponses, GetInstitutionsIssuersData, GetInstitutionsIssuersErrors, GetInstitutionsIssuersResponses, GetInstitutionsManagersData, GetInstitutionsManagersErrors, GetInstitutionsManagersResponses, GetProposedSalesData, GetProposedSalesErrors, GetProposedSalesResponses } from './types.gen';
+import type { GetFundsHoldingsData, GetFundsHoldingsErrors, GetFundsHoldingsResponses, GetFundsListData, GetFundsListErrors, GetFundsListResponses, GetInsiderTransactionsData, GetInsiderTransactionsErrors, GetInsiderTransactionsResponses, GetInstitutionsHoldingsData, GetInstitutionsHoldingsErrors, GetInstitutionsHoldingsResponses, GetInstitutionsIssuersData, GetInstitutionsIssuersErrors, GetInstitutionsIssuersResponses, GetInstitutionsManagersData, GetInstitutionsManagersErrors, GetInstitutionsManagersResponses, GetProposedSalesData, GetProposedSalesErrors, GetProposedSalesResponses, GetSupplyChainTickerData, GetSupplyChainTickerErrors, GetSupplyChainTickerResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -16,6 +16,30 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      * used to access values that aren't defined as part of the SDK function.
      */
     meta?: Record<string, unknown>;
+};
+
+/**
+ * Fund Holdings
+ *
+ * Get holdings of a specific fund (Mutual Fund or ETF) using N-PORT filings.
+ */
+export const getFundsHoldings = <ThrowOnError extends boolean = false>(options: Options<GetFundsHoldingsData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetFundsHoldingsResponses, GetFundsHoldingsErrors, ThrowOnError>({
+        url: '/funds/holdings',
+        ...options
+    });
+};
+
+/**
+ * List Funds
+ *
+ * Get a list of all available funds, including mutual funds, ETFs, and UITs.
+ */
+export const getFundsList = <ThrowOnError extends boolean = false>(options?: Options<GetFundsListData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetFundsListResponses, GetFundsListErrors, ThrowOnError>({
+        url: '/funds/list',
+        ...options
+    });
 };
 
 /**
@@ -74,6 +98,18 @@ export const getInstitutionsManagers = <ThrowOnError extends boolean = false>(op
 export const getProposedSales = <ThrowOnError extends boolean = false>(options?: Options<GetProposedSalesData, ThrowOnError>) => {
     return (options?.client ?? client).get<GetProposedSalesResponses, GetProposedSalesErrors, ThrowOnError>({
         url: '/proposed-sales',
+        ...options
+    });
+};
+
+/**
+ * Supply Chain Relationships
+ *
+ * Returns supply chain relationships for a company extracted from SEC annual filings. Includes suppliers, customers, and partners. Competitor relationships are excluded by default — use include_competitors=true to opt in.
+ */
+export const getSupplyChainTicker = <ThrowOnError extends boolean = false>(options: Options<GetSupplyChainTickerData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetSupplyChainTickerResponses, GetSupplyChainTickerErrors, ThrowOnError>({
+        url: '/supply-chain/:ticker',
         ...options
     });
 };

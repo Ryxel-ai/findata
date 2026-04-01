@@ -4,6 +4,193 @@ export type ClientOptions = {
     baseUrl: `${string}://${string}` | (string & {});
 };
 
+export type GetFundsHoldingsData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Fund ticker symbol (e.g., VTSAX)
+         */
+        symbol: string;
+        /**
+         * Max holdings to return (default 1000, max 10000)
+         */
+        limit?: number | null;
+    };
+    url: '/funds/holdings';
+};
+
+export type GetFundsHoldingsErrors = {
+    /**
+     * Invalid or missing API key
+     */
+    401: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'INVALID_API_KEY';
+    };
+    /**
+     * Fund not found
+     */
+    404: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'FUND_NOT_FOUND';
+    };
+    /**
+     * Rate limit exceeded
+     */
+    429: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'RATE_LIMIT_EXCEEDED';
+    };
+    /**
+     * Server error
+     */
+    500: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'UNKNOWN_ERROR' | 'DATABASE_NOT_CONFIGURED';
+    };
+};
+
+export type GetFundsHoldingsError = GetFundsHoldingsErrors[keyof GetFundsHoldingsErrors];
+
+export type GetFundsHoldingsResponses = {
+    /**
+     * Returns fund holdings
+     */
+    200: {
+        count: number;
+        holdings: Array<{
+            /**
+             * Type of asset (e.g., Equity, Debt)
+             */
+            assetType: string;
+            /**
+             * Name of the issuer
+             */
+            name: string;
+            /**
+             * Percentage of the fund's total value
+             */
+            percent: number | null;
+            /**
+             * Number of shares held
+             */
+            share: number | null;
+            /**
+             * Ticker symbol of the holding
+             */
+            symbol: string | null;
+            /**
+             * USD value of the position
+             */
+            value: number | null;
+        }>;
+        numberOfHoldings: number;
+        success: boolean;
+        symbol: string;
+    };
+};
+
+export type GetFundsHoldingsResponse = GetFundsHoldingsResponses[keyof GetFundsHoldingsResponses];
+
+export type GetFundsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Max results to return (default 1000, max 5000)
+         */
+        limit?: number | null;
+        /**
+         * Offset for pagination
+         */
+        offset?: number | null;
+    };
+    url: '/funds/list';
+};
+
+export type GetFundsListErrors = {
+    /**
+     * Invalid or missing API key
+     */
+    401: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'INVALID_API_KEY';
+    };
+    /**
+     * Rate limit exceeded
+     */
+    429: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'RATE_LIMIT_EXCEEDED';
+    };
+    /**
+     * Server error
+     */
+    500: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'UNKNOWN_ERROR' | 'DATABASE_NOT_CONFIGURED';
+    };
+};
+
+export type GetFundsListError = GetFundsListErrors[keyof GetFundsListErrors];
+
+export type GetFundsListResponses = {
+    /**
+     * Returns list of funds
+     */
+    200: {
+        count: number;
+        funds: Array<{
+            /**
+             * SEC Central Index Key
+             */
+            cik: number;
+            /**
+             * SEC class ID (for mutual funds/ETFs)
+             */
+            class_id: string | null;
+            /**
+             * Type of entity (e.g., investment)
+             */
+            entity_type: string | null;
+            /**
+             * Listing exchange (standard tickers only)
+             */
+            exchange: string | null;
+            /**
+             * Legal name of the entity
+             */
+            name: string;
+            /**
+             * SEC series ID (for mutual funds/ETFs)
+             */
+            series_id: string | null;
+            /**
+             * Fund ticker symbol
+             */
+            symbol: string;
+        }>;
+        success: boolean;
+    };
+};
+
+export type GetFundsListResponse = GetFundsListResponses[keyof GetFundsListResponses];
+
 export type GetInsiderTransactionsData = {
     body?: never;
     path?: never;
@@ -547,3 +734,143 @@ export type GetProposedSalesResponses = {
 };
 
 export type GetProposedSalesResponse = GetProposedSalesResponses[keyof GetProposedSalesResponses];
+
+export type GetSupplyChainTickerData = {
+    body?: never;
+    path: {
+        /**
+         * Stock ticker symbol (e.g., AAPL, NVDA)
+         */
+        ticker: string;
+    };
+    query?: {
+        /**
+         * 'outgoing': only relationships the queried company filed themselves. 'incoming': only relationships where another company mentioned the queried company. 'both' (default): all.
+         */
+        direction?: 'incoming' | 'outgoing' | 'both';
+        /**
+         * Hide 'Customer A/B/C' placeholder nodes (default true)
+         */
+        exclude_anonymized?: string;
+        /**
+         * Include competitor relationships (default false). Competitor data tends to be broad — opt in if needed.
+         */
+        include_competitors?: string;
+    };
+    url: '/supply-chain/:ticker';
+};
+
+export type GetSupplyChainTickerErrors = {
+    /**
+     * Invalid or missing API key
+     */
+    401: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'UNKNOWN_ERROR';
+    };
+    /**
+     * Active subscription required
+     */
+    403: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'UNKNOWN_ERROR';
+    };
+    /**
+     * Company not found for ticker
+     */
+    404: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'COMPANY_NOT_FOUND';
+    };
+    /**
+     * Rate limit exceeded
+     */
+    429: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'UNKNOWN_ERROR';
+    };
+    /**
+     * Server error
+     */
+    500: {
+        details?: unknown;
+        error: true;
+        message?: string;
+        type: 'UNKNOWN_ERROR';
+    };
+};
+
+export type GetSupplyChainTickerError = GetSupplyChainTickerErrors[keyof GetSupplyChainTickerErrors];
+
+export type GetSupplyChainTickerResponses = {
+    /**
+     * Returns supply chain relationships for the company
+     */
+    200: {
+        /**
+         * Total number of relationships returned
+         */
+        count: number;
+        /**
+         * Most recent filing date among the returned relationships (YYYY-MM-DD). Useful for assessing data freshness.
+         */
+        latestFilingDate: string | null;
+        relationships: Array<{
+            /**
+             * Short description of the relationship drawn directly from the filing (5–15 words)
+             */
+            context: string | null;
+            /**
+             * 'outgoing' means the queried company filed this relationship (they mentioned the other company). 'incoming' means another company's filing mentioned the queried company.
+             */
+            direction: 'incoming' | 'outgoing';
+            /**
+             * Date of the SEC filing this relationship was extracted from (YYYY-MM-DD)
+             */
+            filingDate: string | null;
+            /**
+             * Type of relationship. One of: supplier, customer, partner, partner_manufacturing, partner_joint_venture, partner_equity, partner_research, partner_distribution, competitor (opt-in).
+             */
+            relationshipType: string | null;
+            /**
+             * For customer relationships only: the percentage of the filing company's revenue this customer represents. Null for all other relationship types.
+             */
+            revenuePercentage: number | null;
+            /**
+             * Direct link to the SEC EDGAR filing index page this relationship was sourced from
+             */
+            secUrl: string | null;
+            /**
+             * Name of the filing company (the one that mentioned the relationship in their SEC filing)
+             */
+            sourceName: string | null;
+            /**
+             * Ticker symbol of the filing company. Null if unlisted or private.
+             */
+            sourceSymbol: string | null;
+            /**
+             * Name of the mentioned company
+             */
+            targetName: string | null;
+            /**
+             * Ticker symbol of the mentioned company. Null if unlisted or private.
+             */
+            targetSymbol: string | null;
+        }>;
+        success: true;
+        /**
+         * The queried ticker symbol, uppercased
+         */
+        ticker: string;
+    };
+};
+
+export type GetSupplyChainTickerResponse = GetSupplyChainTickerResponses[keyof GetSupplyChainTickerResponses];

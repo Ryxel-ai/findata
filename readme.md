@@ -44,6 +44,8 @@ client.setConfig({
 
 ## ⚛️ Usage with React Query
 
+> **Warning:** Do not use the React Query integration (or any part of this SDK that embeds your API key) in public-facing frontends. Configuring the client with `x-api-key` in browser code exposes your key to anyone who inspects network requests or the page source. Use this SDK on the server side only (e.g. Next.js API routes, a backend proxy, or a server component), and keep your API key out of any bundle shipped to end users.
+
 This requires `@tanstack/react-query` to be installed.
 
 ```tsx
